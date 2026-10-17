@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #FDFCF8;
+    color: #292524;
+    font-family: 'Instrument Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 1.125rem; /* 18px body */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Serif (Display): 'Newsreader', serif. Weights: 200, 300, 400. Letter-spacing: -0.02em. */
+  h1, h2, h3 {
+    font-family: 'Newsreader', Georgia, serif;
+    color: #292524;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  h4, h5, h6 {
+    font-family: 'Instrument Sans', system-ui, sans-serif;
+    color: #292524;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  /* High-rendering image and SVG crispness */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  svg {
+    shape-rendering: geometricPrecision;
+  }
+}
+
+/* Fixed 3% opacity fractal noise overlay for organic paper/film feel */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* Serrated Edges: section dividers using radial-gradient masks to create a jagged 'postage-stamp' or 'tear' effect (20px size) */
+.serrated-edge {
+  position: relative;
+}
+.serrated-edge::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -10px;
+  height: 10px;
+  background: radial-gradient(circle at 10px 0, transparent 0, transparent 6px, #FFFFFF 7px);
+  background-size: 20px 10px;
+  background-repeat: repeat-x;
+  z-index: 5;
+}
+
+@layer components {
+  /* Corner Radii: 24px (Large) for primary cards, 9999px (Full) for buttons */
+  .card {
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    border: 1px solid #EDE8E3;
+    padding: 1.75rem;
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-subtle {
+    background-color: #F7F6F2;
+    border-radius: 24px;
+    border: 1px solid #EDE8E3;
+    padding: 1.5rem;
+  }
+
+  .card-elevated {
+    background-color: #FFFFFF;
+    border-radius: 24px;
+    border: 1px solid #EDE8E3;
+    padding: 1.75rem;
+    box-shadow: 0 10px 30px -4px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Primary Button: Coral Pink (#FFB7B2) with full pill border radius (9999px) and Black text */
+  .btn-primary {
+    background-color: #FFB7B2;
+    color: #292524;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    letter-spacing: -0.01em;
+    border: 1px solid #FF9E99;
+    box-shadow: 0 4px 14px -2px rgba(255, 183, 178, 0.4);
+  }
+  .btn-primary:hover {
+    background-color: #FFA5A0;
+    box-shadow: 0 6px 20px -2px rgba(255, 183, 178, 0.55);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Secondary Button: Crisp White with subtle stone border */
+  .btn-secondary {
+    background-color: #FFFFFF;
+    color: #292524;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 9999px;
+    border: 1px solid #EDE8E3;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.04);
+  }
+  .btn-secondary:hover {
+    background-color: #F7F6F2;
+    border-color: #D6D3D1;
+    transform: translateY(-1px);
+  }
+  .btn-secondary:active {
+    transform: scale(0.98);
+  }
+  .btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* Outline Button */
+  .btn-outline {
+    border: 1px solid #EDE8E3;
+    background-color: transparent;
+    color: #292524;
+    font-family: 'Instrument Sans', sans-serif;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.625rem 1.5rem;
+    border-radius: 9999px;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-outline:hover {
+    border-color: #FFB7B2;
+    color: #292524;
+    background-color: #FFEBEA;
+  }
+
+  /* Inputs: Clean white aesthetic with 16px corner radii */
+  .input {
+    width: 100%;
+    background-color: #FFFFFF;
+    border: 1px solid #EDE8E3;
+    border-radius: 16px;
+    padding: 0.875rem 1.25rem;
+    font-size: 0.9375rem;
+    color: #292524;
+    font-family: 'Instrument Sans', sans-serif;
+    transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .input::placeholder {
+    color: #A8A29E;
+  }
+  .input:focus {
+    outline: none;
+    border-color: #FFB7B2;
+    box-shadow: 0 0 0 3px rgba(255, 183, 178, 0.25);
+  }
+
+  /* Form Labels: 14px */
+  .label {
+    display: block;
+    font-size: 0.875rem; /* 14px labels */
+    font-weight: 600;
+    color: #78716C;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+  }
+
+  /* Badges & Indicators */
+  .badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    letter-spacing: 0.02em;
+    font-family: 'Instrument Sans', sans-serif;
+  }
+
+  .badge-pink, .badge-coral {
+    background-color: #FFEBEA;
+    color: #292524;
+    border: 1px solid #FFD7D4;
+  }
+
+  .badge-sage {
+    background-color: #E8EFE8;
+    color: #292524;
+    border: 1px solid #D4E2D4;
+  }
+
+  .badge-lavender {
+    background-color: #EFEDF4;
+    color: #292524;
+    border: 1px solid #DFDAE8;
+  }
+
+  .badge-stone {
+    background-color: #F7F6F2;
+    color: #78716C;
+    border: 1px solid #EDE8E3;
+  }
+
+  /* Technical Mono Tag */
+  .tech-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 9999px;
+    background-color: #FFEBEA;
+    color: #292524;
+    border: 1px solid #FFD7D4;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .macro-pill {
+    background-color: #F7F6F2;
+    border: 1px solid #EDE8E3;
+    border-radius: 16px;
+    padding: 0.6rem 0.85rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #FDFCF8;
+}
+::-webkit-scrollbar-thumb {
+  background: #EDE8E3;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #D6D3D1;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
